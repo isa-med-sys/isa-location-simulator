@@ -27,8 +27,8 @@ public class RabbitMQProducer {
     @Value("${rabbitmq.routing.key.name}")
     private String routingKey;
     private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQProducer.class);
-    private RabbitTemplate rabbitTemplate;
-    private GeoApiContext geoApiContext; // Google Maps API context
+    private final RabbitTemplate rabbitTemplate;
+    private final GeoApiContext geoApiContext;
 
     public RabbitMQProducer(RabbitTemplate rabbitTemplate, @Value("${google.maps.api.key}") String apiKey) {
         this.rabbitTemplate = rabbitTemplate;
