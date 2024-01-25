@@ -1,4 +1,4 @@
-package com.isa.med_equipment_location_simulator;
+package com.isa.med_equipment_location_simulator.dto;
 
 import lombok.Data;
 
