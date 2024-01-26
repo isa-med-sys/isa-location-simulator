@@ -18,6 +18,13 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.routing.key.name}")
     private String routingKey;
 
+    @Value("${rabbitmq.simulation.queue.name}")
+    private String simulationQueue;
+    @Value("${rabbitmq.simulation.exchange.name}")
+    private String simulationExchange;
+    @Value("${rabbitmq.simulation.routing.key.name}")
+    private String simulationRoutingKey;
+
     @Bean
     public Queue queue(){
         return new Queue(queue);
@@ -31,6 +38,22 @@ public class RabbitMQConfig {
     @Bean
     public Binding binding(){
         return BindingBuilder.bind(queue()).to(exchange()).with(routingKey);
+    }
+
+
+    @Bean
+    public Queue simulationQueue(){
+        return new Queue(simulationQueue);
+    }
+
+    @Bean
+    public TopicExchange simulationExchange(){
+        return new TopicExchange(simulationExchange);
+    }
+
+    @Bean
+    public Binding simulationBinding(){
+        return BindingBuilder.bind(simulationQueue()).to(simulationExchange()).with(simulationRoutingKey);
     }
 
     @Bean
