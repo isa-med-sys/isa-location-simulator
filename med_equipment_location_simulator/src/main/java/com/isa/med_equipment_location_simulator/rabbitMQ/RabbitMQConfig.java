@@ -30,9 +30,7 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public TopicExchange exchange(){
-        return new TopicExchange(exchange);
-    }
+    public TopicExchange exchange(){ return new TopicExchange(exchange); }
 
     @Bean
     public Binding binding(){
@@ -43,11 +41,9 @@ public class RabbitMQConfig {
     public Queue simulationQueue(){
         return new Queue(simulationQueue);
     }
-    
+
     @Bean
-    public Binding simulationBinding(){
-        return BindingBuilder.bind(simulationQueue()).to(exchange()).with(simulationRoutingKey);
-    }
+    public Binding simulationBinding(){ return BindingBuilder.bind(simulationQueue()).to(exchange()).with(simulationRoutingKey); }
 
     @Bean
     public MessageConverter converter(){
