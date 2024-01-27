@@ -27,11 +27,9 @@ public class RabbitMQProducer {
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
 
-    @Value("${rabbitmq.routing.key.name}")
+    @Value("${rabbitmq.locations.routing.key.name}")
     private String routingKey;
 
-    @Value("${rabbitmq.simulation.exchange.name}")
-    private String exchange1;
     @Value("${rabbitmq.simulation.routing.key.name}")
     private String routingKey1;
 
@@ -51,7 +49,7 @@ public class RabbitMQProducer {
 
     public void sendDeliveryStartMessage(DeliveryStartDto deliveryStart) {
         LOGGER.info("Delivery Started -> {}", deliveryStart);
-        rabbitTemplate.convertAndSend(exchange1, routingKey1, deliveryStart);
+        rabbitTemplate.convertAndSend(exchange, routingKey1, deliveryStart);
     }
 
     public void startSimulation(StartDto start) {
@@ -73,7 +71,7 @@ public class RabbitMQProducer {
         executorService.scheduleAtFixedRate(() -> {
             if (index[0] < coordinates.size()) {
                 LatLng coordinate = coordinates.get(index[0]);
-                LocationDto loc = new LocationDto(start.getUserId(), (float) coordinate.lat, (float) coordinate.lng);
+                LocationDto loc = new LocationDto(start.getCompanyId(), (float) coordinate.lat, (float) coordinate.lng);
                 sendMessage(loc);
 
                 index[0]++;
