@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class LocationDto {
-    private Long userId;
+    private Long companyId;
     private Float longitude;
     private Float latitude;
 }

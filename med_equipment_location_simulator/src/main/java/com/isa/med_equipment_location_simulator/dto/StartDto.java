@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class StartDto {
-    private Long userId;
+    private Long companyId;
     private Float longitudeStart;
     private Float latitudeStart;
     private Float longitudeEnd;

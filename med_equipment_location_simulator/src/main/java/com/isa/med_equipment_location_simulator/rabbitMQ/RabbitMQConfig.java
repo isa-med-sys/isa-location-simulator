@@ -11,17 +11,16 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    @Value("${rabbitmq.queue.name}")
-    private String queue;
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
-    @Value("${rabbitmq.routing.key.name}")
+
+    @Value("${rabbitmq.locations.queue.name}")
+    private String queue;
+    @Value("${rabbitmq.locations.routing.key.name}")
     private String routingKey;
 
     @Value("${rabbitmq.simulation.queue.name}")
     private String simulationQueue;
-    @Value("${rabbitmq.simulation.exchange.name}")
-    private String simulationExchange;
     @Value("${rabbitmq.simulation.routing.key.name}")
     private String simulationRoutingKey;
 
@@ -31,15 +30,12 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public TopicExchange exchange(){
-        return new TopicExchange(exchange);
-    }
+    public TopicExchange exchange(){ return new TopicExchange(exchange); }
 
     @Bean
     public Binding binding(){
         return BindingBuilder.bind(queue()).to(exchange()).with(routingKey);
     }
-
 
     @Bean
     public Queue simulationQueue(){
@@ -47,14 +43,7 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public TopicExchange simulationExchange(){
-        return new TopicExchange(simulationExchange);
-    }
-
-    @Bean
-    public Binding simulationBinding(){
-        return BindingBuilder.bind(simulationQueue()).to(simulationExchange()).with(simulationRoutingKey);
-    }
+    public Binding simulationBinding(){ return BindingBuilder.bind(simulationQueue()).to(exchange()).with(simulationRoutingKey); }
 
     @Bean
     public MessageConverter converter(){
