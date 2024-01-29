@@ -78,7 +78,7 @@ public class RabbitMQProducer {
             } else {
                 executorService.shutdown();
             }
-        }, 0, 3, TimeUnit.SECONDS);
+        }, 0, start.getUpdatePeriod(), TimeUnit.SECONDS);
     }
 
     private long calculateTotalDuration(float startLat, float startLng, float endLat, float endLng) {

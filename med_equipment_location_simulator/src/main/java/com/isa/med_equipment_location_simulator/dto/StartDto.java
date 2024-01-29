@@ -9,4 +9,5 @@ public class StartDto {
     private Float latitudeStart;
     private Float longitudeEnd;
     private Float latitudeEnd;
+    private Integer updatePeriod;
 }
