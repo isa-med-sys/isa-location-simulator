@@ -1,5 +1,7 @@
 package com.isa.med_equipment_location_simulator.rabbitMQ;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -46,14 +48,21 @@ public class RabbitMQConfig {
     public Binding simulationBinding(){ return BindingBuilder.bind(simulationQueue()).to(exchange()).with(simulationRoutingKey); }
 
     @Bean
-    public MessageConverter converter(){
-        return new Jackson2JsonMessageConverter();
+    public MessageConverter converter(ObjectMapper objectMapper) {
+        return new Jackson2JsonMessageConverter(objectMapper);
     }
 
     @Bean
-    public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate((connectionFactory));
-        rabbitTemplate.setMessageConverter((converter()));
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        return objectMapper;
+    }
+
+    @Bean
+    public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory, MessageConverter converter) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(converter);
         return rabbitTemplate;
     }
 }

@@ -7,5 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class DeliveryStartDto {
 
+    private Long userId;
     private long totalDurationInMinutes;
 }
