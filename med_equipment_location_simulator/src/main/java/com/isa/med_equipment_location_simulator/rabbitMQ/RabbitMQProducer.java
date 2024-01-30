@@ -61,7 +61,7 @@ public class RabbitMQProducer {
         long totalDurationSeconds = calculateTotalDuration(start.getLatitudeStart(), start.getLongitudeStart(),
                 start.getLatitudeEnd(), start.getLongitudeEnd());
 
-        DeliveryStartDto deliveryStart = new DeliveryStartDto(start.getUserId(), totalDurationSeconds / 60);
+        DeliveryStartDto deliveryStart = new DeliveryStartDto(start.getCompanyId(), totalDurationSeconds / 60);
 
         sendDeliveryStartMessage(deliveryStart);
 
